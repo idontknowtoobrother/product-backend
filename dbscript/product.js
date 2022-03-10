@@ -4,13 +4,15 @@ const Product = require("../models/Product")
 // connect Mongo
 mongoose.connect('mongodb://localhost:27017/example')
 
-async function clearProduct(){
-    
-}
 
+// clear product
+async function clearProduct(){
+    await Product.deleteMany({})
+}
 
 // main
 async function main(){
+    await clearProduct()
     for(var i=0; i < 12; i++){
         const product = new Product({
             name: `Product # ${i}`,
@@ -20,6 +22,6 @@ async function main(){
     }
 }
 
-main.then(()=>{
+main().then(()=>{
     console.log('\'main\' done.');
 })
