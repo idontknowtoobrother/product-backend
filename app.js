@@ -4,13 +4,14 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products')
 // const bodyParser = require('body-parser')
 
+mongoose.connect('mongodb://localhost:27017/example')
 var app = express();
-
 app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());

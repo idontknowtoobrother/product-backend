@@ -1,6 +1,7 @@
 const express = require('express')
 const res = require('express/lib/response')
 const router = express.Router()
+const Product = require('../models/Product');
 
 // variables
 const products = [{
@@ -57,8 +58,17 @@ const products = [{
 
 
 // function
-const getProducts = (req, res, next) => {
-    res.json(products)
+const getProducts = async function(req, res, next){
+    try {
+        const products = await Product.find({}).exec()
+        console.log('object');
+        res.status(200).json(products)
+    } catch (e) {
+        return res.status(500).json({
+            code: 500,
+            status: `error info: ${e}`
+        })
+    }
 }
 const addProducts = (req, res, next) => {
     const reuestAddProduct = {
