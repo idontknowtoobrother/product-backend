@@ -13,11 +13,9 @@ async function clearProduct(){
 async function main(){
     await clearProduct()
     for(var i=0; i < 12; i++){
-        var number = i+1
         const product = new Product({
-            id: i,
-            name: `Product # ${number}`,
-            price: number*1000
+            name: `Product # ${i+1}`,
+            price: (i+1)*1000
         })
         product.save()
     }
