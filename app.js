@@ -8,6 +8,8 @@ const mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products')
+const authRouter = require('./routes/auth')
+
 // const bodyParser = require('body-parser')
 
 mongoose.connect('mongodb://localhost:27017/example')
@@ -24,5 +26,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/products', productsRouter)
+app.use('/auth', authRouter)
 
 module.exports = app;
