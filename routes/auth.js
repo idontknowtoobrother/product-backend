@@ -11,7 +11,7 @@ const login = async function(req, res, next){
         const users = await User.findOne({
             username: username,
             password: password
-        }).exec()
+        }, '-password').exec()
 
         if(users === null)return res.status(404).json({
             message: 'User not found !'
@@ -25,7 +25,7 @@ const login = async function(req, res, next){
             code: 500,
             status: `'can't get users' \nerror info: ${e.message}`
         })
-        
+
     }
 }
 
