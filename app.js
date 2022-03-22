@@ -9,6 +9,9 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products')
 const authRouter = require('./routes/auth')
+const dotenv = require('dotenv');
+dotenv.config();
+const { authMiddleware } = require('./helper/auth') 
 
 // const bodyParser = require('body-parser')
 
@@ -24,7 +27,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/users', authMiddleware, usersRouter);
 app.use('/products', productsRouter)
 app.use('/auth', authRouter)
 
