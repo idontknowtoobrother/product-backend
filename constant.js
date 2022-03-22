@@ -1,6 +1,8 @@
 const ROLES = {
     ADMIN: 'ADMIN',
-    USER: 'USER'
+    LOCAL_ADMIN: 'LOCAL_ADMIN',
+    USER: 'USER',
+    TEST_DENINE_ACCESS: 'TEST_DENINE_ACCESS'
 }
 
 module.exports = {

@@ -18,7 +18,23 @@ const authMiddleware = function(req, res, next){
     next()
 }
 
+const authorizeMiddleware = function(roles) {
+    return function(req, res, next){
+        if(req.user == null) return res.sendStatus(401);
+        var isAccess = false
+        req.user.roles.forEach(role => {
+            if(roles.indexOf(role) > -1){
+                isAccess = true
+                return
+            }
+        })
+        if(isAccess)return next()
+        return res.sendStatus(401)
+    }
+}
+
 module.exports = {
     generateAccessToken,
-    authMiddleware
+    authMiddleware,
+    authorizeMiddleware
 }
