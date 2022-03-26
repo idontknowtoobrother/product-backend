@@ -8,27 +8,24 @@ const generateAccessToken = function(user) {
 const authMiddleware = function(req, res, next){
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
-    
-    if(token == null) return res.sendStatus(401)
+    if(token == null) {
+        return res.sendStatus(401)
+    }
     jwt.verify(token, process.env.TOKEN_SECRET, async function(err, user){
         if(err) return res.sendStatus(403)
         const currentUser =  await User.findById(user._id).exec()
         req.user = currentUser
+        next()
     })
-    next()
+    
 }
 
 const authorizeMiddleware = function(roles) {
     return function(req, res, next){
+        console.log(req.user);
         if(req.user == null) return res.sendStatus(401);
-        var isAccess = false
-        req.user.roles.forEach(role => {
-            if(roles.indexOf(role) > -1){
-                isAccess = true
-                return
-            }
-        })
-        if(isAccess)return next()
+        const isAccess = req.user.roles.find(role => roles.indexOf(role) > -1)
+        if(isAccess != undefined)return next()
         return res.sendStatus(401)
     }
 }

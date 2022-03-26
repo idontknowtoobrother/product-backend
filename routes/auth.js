@@ -43,7 +43,7 @@ const login = async function(req, res, next){
             })
 
         })
-
+        next()
 
     } catch (e) {
 
