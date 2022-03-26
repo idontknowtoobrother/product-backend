@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/User');
+const bcryptjs = require('bcryptjs');
 const { 
     generateAccessToken
 } = require('../helper/auth');
@@ -14,22 +15,35 @@ const login = async function(req, res, next){
     try {
 
         const user = await User.findOne({
-            username: username,
-            password: password
-        }, '-password').exec()
+            username: username
+        }).exec()
 
-        if(user === null)return res.status(404).json({
-            message: 'User not found !'
+        const verifyResult = bcryptjs.compare(password, user.password)
+
+        verifyResult.then(function(access){
+            if(!access){
+                return res.status(404).json({
+                    message: 'User not found !'
+                })
+            }
+                
+            const token = generateAccessToken({
+                _id: user._id,
+                username: user.username
+            })
+            
+            res.status(200).json({
+                user: {
+                    _id: user._id,
+                    username: user.username,
+                    name: user.name,
+                    roles: user.roles
+                },
+                token: token
+            })
+
         })
 
-        const token = generateAccessToken({
-            username: user.username,
-            roles: user.roles
-        })
-        res.status(200).json({
-            user: user,
-            token: token
-        })
 
     } catch (e) {
 
