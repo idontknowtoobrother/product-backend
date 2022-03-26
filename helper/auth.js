@@ -22,7 +22,6 @@ const authMiddleware = function(req, res, next){
 
 const authorizeMiddleware = function(roles) {
     return function(req, res, next){
-        console.log(req.user);
         if(req.user == null) return res.sendStatus(401);
         const isAccess = req.user.roles.find(role => roles.indexOf(role) > -1)
         if(isAccess != undefined)return next()
