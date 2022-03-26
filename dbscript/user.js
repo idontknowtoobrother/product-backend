@@ -16,7 +16,7 @@ async function main(){
     await clearUsers()
     for(var i=0; i < 3; i++){
         const user = new User({
-            username: `user${i+1}`,
+            username: `user${i+1}@gmail.com`,
             password: `user${i+1}`,
             name: `User # ${i+1}`,
             roles: [ROLES.USER]
@@ -24,7 +24,7 @@ async function main(){
         user.save()
     }
     const adminUser = new User({
-        username: `admin`,
+        username: `admin@gmail.com`,
         password: `root`,
         name: `ADMIN # 1`,
         roles: [ROLES.ADMIN, ROLES.USER]
