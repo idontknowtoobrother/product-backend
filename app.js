@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products')
 const authRouter = require('./routes/auth')
+const eventRouter = require('./routes/events')
 const dotenv = require('dotenv');
 dotenv.config();
 const { authMiddleware, authorizeMiddleware } = require('./helper/auth') 
@@ -31,5 +32,6 @@ app.use('/', indexRouter);
 app.use('/users', authMiddleware, authorizeMiddleware([ROLES.ADMIN, ROLES.LOCAL_ADMIN]), usersRouter);
 app.use('/products', authMiddleware, authorizeMiddleware([ROLES.ADMIN, ROLES.LOCAL_ADMIN]), productsRouter)
 app.use('/auth', authRouter)
+app.use('/events', eventRouter)
 
 module.exports = app;
